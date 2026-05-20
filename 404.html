@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Typple</title>
+<meta name="apple-itunes-app" content="app-id=PLACEHOLDER_APP_ID">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#F6F3EE;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+  .card{max-width:480px;text-align:center}
+  h1{font-size:24px;font-weight:700;margin-bottom:12px}
+  p{font-size:16px;color:#444;margin-bottom:20px;line-height:1.5}
+  .cta{display:inline-block;padding:14px 24px;background:#111;color:#FAF8F4;border-radius:10px;text-decoration:none;font-weight:600}
+  .note{margin-top:16px;font-size:13px;color:#888}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <h1 id="title">Typple</h1>
+  <p id="message">Cargando…</p>
+  <a id="cta" class="cta" href="/" style="display:none">Volver al inicio</a>
+  <p class="note" id="note" style="display:none"></p>
+</div>
+<script>
+(function(){
+  var path = location.pathname || '';
+  var isInvite = /^\/i\/[A-Za-z0-9_-]+\/?$/.test(path);
+  var title = document.getElementById('title');
+  var message = document.getElementById('message');
+  var cta = document.getElementById('cta');
+  var note = document.getElementById('note');
+
+  if (!isInvite) {
+    title.textContent = 'Página no encontrada';
+    message.textContent = 'No encontramos lo que buscás.';
+    cta.style.display = 'inline-block';
+    return;
+  }
+
+  // Path matched /i/<token> — invitation handler.
+  title.textContent = 'Te invitan a un split en Typple';
+  var ua = navigator.userAgent || '';
+  var isIOS = /iPhone|iPad|iPod/.test(ua);
+  var isAndroid = /Android/.test(ua);
+  if (isIOS) {
+    message.textContent = 'Instalá Typple para hacer claim de tu lugar en el split.';
+    cta.textContent = 'Descargar en App Store';
+    cta.href = 'https://apps.apple.com/app/idPLACEHOLDER_APP_ID';
+    cta.style.display = 'inline-block';
+    note.textContent = 'Una vez instalada Typple, volvé a tocar el link desde donde lo recibiste (WhatsApp, SMS) para hacer claim.';
+    note.style.display = 'block';
+  } else if (isAndroid) {
+    message.textContent = 'Instalá Typple para hacer claim de tu lugar en el split.';
+    cta.textContent = 'Descargar en Google Play';
+    cta.href = 'https://play.google.com/store/apps/details?id=com.typple';
+    cta.style.display = 'inline-block';
+    note.textContent = 'Una vez instalada Typple, volvé a tocar el link desde donde lo recibiste (WhatsApp, SMS) para hacer claim.';
+    note.style.display = 'block';
+  } else {
+    message.textContent = 'Typple es para iOS y Android. Abrí este link desde tu celular.';
+    cta.style.display = 'none';
+  }
+})();
+</script>
+</body>
+</html>
