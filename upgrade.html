@@ -18,7 +18,7 @@
 <body>
   <div class="box">
     <h2 id="status">Abriendo el checkout…</h2>
-    <p class="muted" id="hint">Completá el pago en la ventana de Paddle.</p>
+    <p class="muted" id="hint">Completa el pago en la ventana de Paddle.</p>
     <a class="btn" id="back" href="typpleapp://upgrade-success" style="display:none">
       Volver a la app
     </a>
@@ -43,7 +43,7 @@
     function showDone() {
       document.getElementById('status').textContent = '¡Listo!';
       document.getElementById('hint').textContent =
-        'Ya podés volver a la app.';
+        'Si la app no se abrió sola, toca el botón para volver.';
       document.getElementById('back').style.display = 'inline-block';
       // Camino feliz: reabre la app por deep link.
       window.location.href = 'typpleapp://upgrade-success';
@@ -54,7 +54,7 @@
     } else if (!userId) {
       document.getElementById('status').textContent = 'Falta información';
       document.getElementById('hint').textContent =
-        'Abrí esta página desde la app.';
+        'Abre esta página desde la app.';
     } else {
       if (PADDLE_ENV === 'sandbox') Paddle.Environment.set('sandbox');
       Paddle.Initialize({token: PADDLE_CLIENT_TOKEN});
