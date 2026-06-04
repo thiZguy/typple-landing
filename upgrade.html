@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Typple — Premium</title>
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; display: flex;
+      min-height: 100vh; align-items: center; justify-content: center;
+      margin: 0; background: #faf9f7; color: #1a1a1a; text-align: center; }
+    .box { padding: 24px; max-width: 360px; }
+    .muted { color: #6b6b6b; }
+    a.btn { display: inline-block; margin-top: 16px; padding: 12px 20px;
+      background: #1a1a1a; color: #fff; border-radius: 12px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2 id="status">Abriendo el checkout…</h2>
+    <p class="muted" id="hint">Completá el pago en la ventana de Paddle.</p>
+    <a class="btn" id="back" href="typpleapp://upgrade-success" style="display:none">
+      Volver a la app
+    </a>
+  </div>
+
+  <script>
+    // === CONFIG (SANDBOX) — reemplazar al flippear a producción ===
+    var PADDLE_ENV = 'sandbox';                  // 'sandbox' | 'production'
+    var PADDLE_CLIENT_TOKEN = 'test_REEMPLAZAR'; // client-side token (Task D3)
+    var PRICE_IDS = {
+      monthly: 'pri_REEMPLAZAR_MENSUAL',         // (Task D2)
+      annual: 'pri_REEMPLAZAR_ANUAL',            // (Task D2)
+    };
+    // ==============================================================
+
+    function qp(name) {
+      return new URLSearchParams(window.location.search).get(name);
+    }
+    var userId = qp('user_id');
+    var plan = qp('plan') === 'annual' ? 'annual' : 'monthly';
+
+    function showDone() {
+      document.getElementById('status').textContent = '¡Listo!';
+      document.getElementById('hint').textContent =
+        'Ya podés volver a la app.';
+      document.getElementById('back').style.display = 'inline-block';
+      // Camino feliz: reabre la app por deep link.
+      window.location.href = 'typpleapp://upgrade-success';
+    }
+
+    if (qp('success') === '1') {
+      showDone();
+    } else if (!userId) {
+      document.getElementById('status').textContent = 'Falta información';
+      document.getElementById('hint').textContent =
+        'Abrí esta página desde la app.';
+    } else {
+      if (PADDLE_ENV === 'sandbox') Paddle.Environment.set('sandbox');
+      Paddle.Initialize({token: PADDLE_CLIENT_TOKEN});
+      Paddle.Checkout.open({
+        items: [{priceId: PRICE_IDS[plan], quantity: 1}],
+        customData: {user_id: userId},
+        settings: {
+          successUrl: window.location.origin + '/upgrade?success=1',
+        },
+      });
+    }
+  </script>
+</body>
+</html>
