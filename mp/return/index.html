@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Typple — Pago</title>
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; display: flex;
+      min-height: 100vh; align-items: center; justify-content: center;
+      margin: 0; background: #faf9f7; color: #1a1a1a; text-align: center; }
+    .box { padding: 24px; max-width: 360px; }
+    .mark { font-size: 44px; line-height: 1; margin-bottom: 8px; }
+    .ok { color: #1f9d55; }
+    .wait { color: #c98a1a; }
+    .err { color: #d64545; }
+    h2 { margin: 8px 0; font-size: 22px; }
+    .muted { color: #6b6b6b; }
+    a.btn { display: inline-block; margin-top: 16px; padding: 12px 20px;
+      background: #1a1a1a; color: #fff; border-radius: 12px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="mark" id="mark">…</div>
+    <h2 id="status">Procesando…</h2>
+    <p class="muted" id="hint">Un momento.</p>
+    <a class="btn" id="back" href="typpleapp://" style="display:none">
+      Volver a Typple
+    </a>
+  </div>
+
+  <script>
+    // Página de RETORNO del checkout de Mercado Pago (back_urls).
+    // OJO: el status que manda MP acá es solo para mostrar. La confirmación
+    // REAL del pago la hace el webhook (mp-webhook) del lado del server, que
+    // marca al miembro como pagado. Esta página no decide nada.
+    function qp(name) {
+      return new URLSearchParams(window.location.search).get(name);
+    }
+    var status = qp('status') || qp('collection_status');
+
+    var el = {
+      mark: document.getElementById('mark'),
+      status: document.getElementById('status'),
+      hint: document.getElementById('hint'),
+      back: document.getElementById('back'),
+    };
+    el.back.style.display = 'inline-block';
+
+    if (status === 'approved') {
+      el.mark.textContent = '✓';
+      el.mark.className = 'mark ok';
+      el.status.textContent = '¡Pago enviado!';
+      el.hint.textContent = 'Se confirma en Typple en unos segundos. Volvé a la app.';
+      // Camino feliz: reabre la app por deep link.
+      window.location.href = 'typpleapp://';
+    } else if (status === 'pending' || status === 'in_process') {
+      el.mark.textContent = '⏳';
+      el.mark.className = 'mark wait';
+      el.status.textContent = 'Pago pendiente';
+      el.hint.textContent = 'Mercado Pago lo está procesando. Te avisamos en la app cuando se confirme.';
+    } else if (status === 'rejected' || status === 'failure' || status === 'cancelled') {
+      el.mark.textContent = '✕';
+      el.mark.className = 'mark err';
+      el.status.textContent = 'El pago no se completó';
+      el.hint.textContent = 'No se hizo ningún cargo. Podés intentar de nuevo desde la app.';
+    } else {
+      el.mark.textContent = '↩';
+      el.mark.className = 'mark';
+      el.status.textContent = 'Volvé a Typple';
+      el.hint.textContent = 'Abrí la app para ver el estado de tu pago.';
+    }
+  </script>
+</body>
+</html>
