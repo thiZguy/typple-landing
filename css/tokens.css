@@ -1,0 +1,39 @@
+/* Design tokens: color, radios, sombras, tipografías, ancho máximo — extraído de index.html (bundle) */
+
+:root{
+  --bg-page:        #ECEAE5;
+  --bg-app:         #F6F3EE;
+  --bg-card:        #FFFFFF;
+  --bg-sunken:      #F1EEE9;
+  --bg-receipt:     #FFFDF8;
+  --bg-inverse:     #1A1A1A;
+
+  --ink-1:          #111111;
+  --ink-2:          #3A3A38;
+  --ink-3:          #6E6B66;
+  --ink-4:          #A6A29B;
+  --ink-on-dark:    #FAF8F4;
+  --ink-on-dark-q:  #BDB9B1;
+
+  --stroke-1:       #E8E4DD;
+  --stroke-2:       #D8D3CA;
+
+  --accent:         #E96A4D;
+  --accent-soft:    #F8D9CF;
+  --positive:       #2F8F5A;
+  --positive-soft:  #D4E9DC;
+  --warning:        #B57A14;
+  --warning-soft:   #F1E2BD;
+
+  --r-1: 8px; --r-2: 12px; --r-3: 16px; --r-4: 22px; --r-5: 28px; --r-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(20,16,8,.04), 0 1px 1px rgba(20,16,8,.03);
+  --shadow-md: 0 6px 18px rgba(20,16,8,.06), 0 2px 6px rgba(20,16,8,.04);
+  --shadow-lg: 0 22px 50px rgba(20,16,8,.10), 0 6px 18px rgba(20,16,8,.05);
+  --shadow-xl: 0 40px 80px rgba(20,16,8,.14), 0 12px 30px rgba(20,16,8,.06);
+
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --max-w: 1240px;
+}

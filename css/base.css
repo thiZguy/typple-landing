@@ -1,0 +1,25 @@
+/* Reset, elementos base y helpers compartidos — extraído de index.html (bundle) */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-sans);
+  color: var(--ink-1);
+  background: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01","cv11";
+  line-height: 1.5;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+.mono { font-family: var(--font-mono); }
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--ink-3);
+}
